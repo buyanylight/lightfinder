@@ -6,6 +6,19 @@ export default {
 	
 	methods:{
 
+		gettokens(){
+			return new Promise((resolve, reject) => {
+				this.$store.dispatch(this.getStore()+'/getBalTokens_a')
+				.then((rspns)=>{
+					resolve(rspns);
+					console.log(111111);
+				}).catch((e)=>{
+					console.log(e);
+					reject(e);
+				});	
+			})
+		},
+
 		getMaxInqs(){
 			return new Promise((resolve,reject)=>{
 				this.$store.dispatch(this.getStore()+'/getActiveSubscription_a')

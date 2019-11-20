@@ -21,6 +21,11 @@ const state = {
 
 	api: {
 
+		forgotPassword: {
+			method: 'post',
+			url: base_url+'/v1/forgot-password',  
+		},
+
 		login: {
 			method: 'post',
 			url: base_url+'/v1/login',  
@@ -443,6 +448,27 @@ const actions = {
 
 
 	},
+
+
+	sendPasscode_a(context, data){
+
+		return new Promise((resolve, reject) =>{
+			axios({
+				url: state.api.forgotPassword.url,
+				method: state.api.forgotPassword.method,
+				data: data
+			})
+			.then(response => {
+				resolve(response);
+			})		
+			.catch(error=>{
+				reject(error.response);
+
+			})	
+		})
+	},
+
+
 
 
 

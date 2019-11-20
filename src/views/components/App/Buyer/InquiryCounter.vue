@@ -55,6 +55,14 @@
 				</template>
 			</h3>			
 		</v-flex>
+		<v-flex>
+			<template>
+				<v-btn color="primary">
+					<a href="https://buyanylight.com/ieo#section-bal-token" style="color: white;" target="_blank">Buy BAL Tokens</a>
+				</v-btn>
+			</template>
+
+		</v-flex>
 	</v-layout>
 
 	<upgrade-account-dialog :openDialog.sync="openDialog"></upgrade-account-dialog>
@@ -97,6 +105,7 @@ data(){return{
 
 created(){
 	this.setMaxAndTotalInqs();	
+	this.getBalTkns();	
 
 	inqEvntBs.onFormSubmitted(()=>{
 		this.setMaxAndTotalInqs();
@@ -105,6 +114,13 @@ created(){
 
 
 methods:{
+
+
+	getBalTkns(){
+		this.gettokens().then((rspns)=>{
+			console.log(rspns);
+		})
+	},
 
 	setMaxAndTotalInqs(){
 		this.getMaxInqs().then((rspns)=>{

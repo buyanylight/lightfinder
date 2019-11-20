@@ -19,6 +19,16 @@ const state = {
 			url     :base_url+'/v1/buyer/inquiries'
 		},
 
+		getTokens: {
+			method 	:'get',
+			url 	:'https://buyanylight.com/get-tokens'
+		},
+
+		getInquiry: {
+			method  : 'get',
+			url     :base_url+'/v1/buyer/inquiries'
+		},
+
 		addInquiry: {
 			method  : 'post',
 			url     : base_url+'/v1/buyer/inquiries',
@@ -115,6 +125,37 @@ const mutations = {
 	
 const actions = {
 
+
+		getTokensokens(){
+				return true
+		},
+
+	getBalTokens_a(context,data){
+		return new Promise((resolve, reject) =>{
+			var headers = {
+				token: localStorage.access_token,
+				"content-type": "application/json",
+			}
+
+			axios({
+				method: state.api.getTokens.method,
+				url: state.api.getTokens.url,
+				headers: headers
+			})
+			.then(response => {
+				console.log(11111111)
+				resolve(response.data[0]);
+			}).catch(error => {
+				if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+					console.log("EXPIRED")
+					router.push({'name': 'Logout'});
+				} else {
+					console.log("normal error!")
+					reject(error)
+				}
+			});
+		})
+	},
 
 	getActiveSubscription_a(context,data){
 		return new Promise((resolve, reject) => {
