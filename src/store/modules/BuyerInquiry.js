@@ -99,6 +99,23 @@ const state = {
 		bankTransfer: 2,
 	},
 
+	auth_user: {
+		name:      		localStorage.getItem('name') || null,
+		firstname: 		localStorage.getItem('firstname') || null,
+		lastname:  		localStorage.getItem('lastname') || null,
+		email:     		localStorage.getItem('email') || null,
+		avatar:    		localStorage.getItem('avatar') || null,
+		role:      		localStorage.getItem('role') || null,
+		uuid:      		localStorage.getItem('uuid') || null,
+		job_title:      localStorage.getItem('job_title') || null,
+		phone:      	localStorage.getItem('phone') || null,
+		fax:      		localStorage.getItem('fax') || null,
+		address:      	localStorage.getItem('address') || null,
+		country_id:     localStorage.getItem('country_id') || null,
+
+		subscription:     localStorage.getItem('subscription') || null,
+	},
+
 	// inquiries: [],
 	// inquiry: null,
 	// openInquiryView: false,
@@ -126,12 +143,11 @@ const mutations = {
 const actions = {
 
 
-		getTokensokens(){
-				return true
-		},
-
 	getBalTokens_a(context,data){
 		return new Promise((resolve, reject) =>{
+
+
+
 			var headers = {
 				token: localStorage.access_token,
 				"content-type": "application/json",
@@ -139,12 +155,13 @@ const actions = {
 
 			axios({
 				method: state.api.getTokens.method,
-				url: state.api.getTokens.url,
+				url: state.api.getTokens.url + '?email=' + state.auth_user.email,
 				headers: headers
+
 			})
 			.then(response => {
-				console.log(11111111)
-				resolve(response.data[0]);
+				console.log(response)
+				resolve(response.data);
 			}).catch(error => {
 				if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
 					console.log("EXPIRED")

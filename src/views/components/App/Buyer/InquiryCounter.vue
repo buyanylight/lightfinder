@@ -57,6 +57,10 @@
 		</v-flex>
 		<v-flex>
 			<template>
+				<v-btn> You have {{ baltkn }} BAL Tokens</v-btn>
+
+			</template>
+			<template>
 				<v-btn color="primary">
 					<a href="https://buyanylight.com/ieo#section-bal-token" style="color: white;" target="_blank">Buy BAL Tokens</a>
 				</v-btn>
@@ -101,6 +105,8 @@ data(){return{
 
 	pckg: {},
 
+	baltkn: 0
+
 }},
 
 created(){
@@ -119,6 +125,7 @@ methods:{
 	getBalTkns(){
 		this.gettokens().then((rspns)=>{
 			console.log(rspns);
+			this.baltkn = rspns;
 		})
 	},
 
