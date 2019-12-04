@@ -41,36 +41,35 @@
 			<h3 class="mr-3">
 				<template v-if="pckg.max_inquiry - totalInqs > 1 || pckg.max_inquiry - totalInqs == 0">
 					<v-icon class="mr-2">fas fa-clipboard-list</v-icon>
-					LightFinder Inquiries: {{ pckg.max_inquiry - totalInqs }} remaining out of {{ pckg.max_inquiry }}
+					Inquiries: {{ pckg.max_inquiry - totalInqs }} remaining out of {{ pckg.max_inquiry }}
 				</template>
 				<template v-else-if="pckg.max_inquiry - totalInqs == 1">
 					<v-icon class="mr-2">fas fa-clipboard-list</v-icon>
 					<!-- Only 1 Inquiry remaining. -->
-					LightFinder Inquiries: {{ pckg.max_inquiry - totalInqs }} remaining out of {{ pckg.max_inquiry }}
+					Inquiries: {{ pckg.max_inquiry - totalInqs }} remaining out of {{ pckg.max_inquiry }}
 				</template>
 				<template v-else>
 					<v-icon class="mr-2">fas fa-clipboard-list</v-icon>
 					<!-- Only 1 Inquiry remaining. -->
-					LightFinder Inquiries: {{ pckg.max_inquiry - totalInqs }} remaining out of {{ pckg.max_inquiry }}
+					Inquiries: {{ pckg.max_inquiry - totalInqs }} remaining out of {{ pckg.max_inquiry }}
 				</template>
 			</h3>			
 		</v-flex>
+
 		<v-flex>
-			<template>
-				<v-btn> You have {{ baltkn }} BAL Tokens</v-btn>
+			<v-btn> You have {{ baltkn }} BAL Tokens</v-btn>
 
-			</template>
-			<template>
-				<v-btn color="primary">
-					<a href="https://buyanylight.com/ieo#section-bal-token" style="color: white;" target="_blank">Buy BAL Tokens</a>
-				</v-btn>
-			</template>
+			<v-btn color="primary">
+				<a href="https://buyanylight.com/ieo#section-bal-token" style="color: white;" target="_blank">Buy BAL Tokens</a>
+			</v-btn>
 
+			<v-btn color="primary" @click="openReferralDialog=true">Referral Link</v-btn>
 		</v-flex>
 	</v-layout>
 
 	<upgrade-account-dialog :openDialog.sync="openDialog"></upgrade-account-dialog>
 
+	<referral-link-dialog :dialog.sync="openReferralDialog"></referral-link-dialog>
 		
 </div>
 </template>
@@ -78,6 +77,7 @@
 <script>
 
 import UpgradeAccountDialog from "@/views/Components/App/Buyer/UpgradeAccountDialog";
+import ReferralLinkDialog from "@/views/Components/App/Buyer/ReferralLinkDialog";
 import inqMixin from "@/mixins/inquiry";
 import inqEvntBs from "@/bus/inquiry"
 
@@ -88,6 +88,7 @@ mixins:[
 
 components:{
 	UpgradeAccountDialog,
+	ReferralLinkDialog,
 },
 
 
@@ -96,6 +97,8 @@ props:[
 
 data(){return{
 	openDialog:false,
+	
+	openReferralDialog:false,
 	
 	
 	'totalInqs': 0,

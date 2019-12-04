@@ -86,6 +86,7 @@ const state = {
 		country_id:     localStorage.getItem('country_id') || null,
 
 		subscription:     localStorage.getItem('subscription') || null,
+		referral_code:     localStorage.getItem('referral_code') || null,
 	},
 
 
@@ -129,6 +130,7 @@ const mutations = {
 		state.auth_user.address		= user.address;
 		state.auth_user.country_id 	= user.country_id;
 		state.auth_user.subscription 	= user.subscription;
+		state.auth_user.referral_code 	= user.referral_code;
 	},
 
 	DESTROY_AUTHUSER_M(state) {
@@ -146,6 +148,7 @@ const mutations = {
 		state.auth_user.address		= null;
 		state.auth_user.country_id	= null;
 		state.auth_user.subscription	= null;
+		state.auth_user.referral_code 	= null;
 	},
 
 
@@ -220,6 +223,7 @@ const actions = {
 				localStorage.setItem('address' 		,user.address);
 				localStorage.setItem('country_id' 	,user.country_id);
 				localStorage.setItem('subscription' 	,user.subscription);
+				localStorage.setItem('referral_code' 	,user.referral_code);
 
 				context.commit('SET_AUTHUSER_M',user);
 				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -311,6 +315,7 @@ const actions = {
 				localStorage.setItem('address' 		,user.address);
 				localStorage.setItem('country_id' 	,user.country_id);
 				localStorage.setItem('subscription' 	,user.subscription);
+				localStorage.setItem('referral_code' 	,user.referral_code);
 
 				context.commit('SET_AUTHUSER_M',user);
 				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
