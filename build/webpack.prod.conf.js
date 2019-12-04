@@ -15,6 +15,9 @@ const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : require('../config/prod.env')
 
+const Dotenv = require('dotenv-webpack');
+
+
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({
@@ -31,9 +34,15 @@ const webpackConfig = merge(baseWebpackConfig, {
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
-    new webpack.DefinePlugin({
-      'process.env': env
-    }),
+    // new webpack.DefinePlugin({
+    //   'process.env': env
+    // }),
+    // this was changed by tawing for .env
+	new Dotenv({
+		path: './.env.production'
+	}),	
+
+
     new UglifyJsPlugin({
       uglifyOptions: {
         compress: {

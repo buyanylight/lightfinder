@@ -23,6 +23,7 @@
 				<!-- <div class="headline">Sign in to your account</div> -->
 				<v-form @submit.prevent="" ref="form">
 				  <v-layout wrap row pa-4>
+
 					<v-flex xs12 pa-0>
 					  <v-text-field
 						color="primary"
@@ -714,6 +715,11 @@ export default {
 	},
 
 	beforeCreate(){
+
+	},
+
+
+	computed: {
 
 	},
 }

@@ -1,57 +1,14 @@
 
-// DEVELOPEMENT
-//////////////////////////////////////////////////////////////
-const developement = {
-	apiURL : 'http://192.168.1.200:8000',
-	socketURL : 'http://192.168.1.200:3000',
-	websiteURL : 'http://almani.ddns.net:1984',
-	devMode :  true,
-	defaultMaxInqs :  99,
-	merchant_key :  'test_$2y$10$.0TFlqFxM7y.3GoHkDIqWeO-2bT2eBz8t86PVUkHwH9zMghDm5PLi',
-	eur_convesion_url :  '/static/currency/eur_conversion.xml',
-	// crypto_convesion_url :  '/static/crypto.json';
-	crypto_convesion_url :  'https://api.coinbase.com/v2/prices',
-}
-//////////////////////////////////////////////////////////////
-// DEVELOPEMENT
-
-
-// PRODUCTION
-//////////////////////////////////////////////////////////////
-const production = {
-	apiURL : 'https://api.buyanylight.com',
-	// socketURL : 'https://data.buyanylight.com/socket.io',
-	socketURL : 'https://data3.buyanylight.com/socket.io',
-	websiteURL : 'https://lightfinder.buyanylight.com',
-	devMode :  false,
-	defaultMaxInqs :  1,
-	merchant_key :  'live_$2y$10$Q73YSkuFiykik9zVfS2BBORIwHPFfXTD0-73YXtUycUxdl5m-rCXC',
-	// eur_convesion_url :  'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml',
-	eur_convesion_url :  '/static/currency/eur_conversion.xml',
-	crypto_convesion_url :  'https://api.coinbase.com/v2/prices',
-	// crypto_convesion_url :  'https://blockchain.info/ticker',
-}
-//////////////////////////////////////////////////////////////
-// PRODUCTION
-
-// PRODUCTION Test
-//////////////////////////////////////////////////////////////
-const productionTest = {
-	apiURL : 'https://api.buyanylight.com',
-	socketURL : 'https://data.buyanylight.com/socket.io',
-	websiteURL : 'https://tawing.net',
-	devMode :  false,
-	defaultMaxInqs :  1,
-	merchant_key :  'live_$2y$10$Q73YSkuFiykik9zVfS2BBORIwHPFfXTD0-73YXtUycUxdl5m-rCXC',
-	eur_convesion_url :  'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml',
-	crypto_convesion_url :  'https://api.coinbase.com/v2/prices',
-}
-//////////////////////////////////////////////////////////////
-// PRODUCTION Test
-
 
 const env = {
-	...production,
+	apiURL : process.env.APIURL,
+	socketURL : process.env.SOCKETURL,
+	websiteURL : process.env.WEBSITEURL,
+	devMode : process.env.DEVMODE,
+	defaultMaxInqs : process.env.DEFAULTMAXINQS,
+	merchant_key : process.env.MERCHANT_KEY,
+	eur_convesion_url : process.env.EUR_CONVESION_URL,
+	crypto_convesion_url : process.env.CRYPTO_CONVESION_URL,
 };
 
 export default {
