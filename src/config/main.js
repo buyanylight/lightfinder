@@ -51,7 +51,7 @@ const productionTest = {
 
 
 const env = {
-	...developement,
+	...production,
 };
 
 export default {

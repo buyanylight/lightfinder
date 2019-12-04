@@ -11,7 +11,7 @@ export default {
 				this.$store.dispatch(this.getStore()+'/getBalTokens_a')
 				.then((rspns)=>{
 					resolve(rspns);
-					console.log(111111);
+					console.log(rspns);
 				}).catch((e)=>{
 					console.log(e);
 					reject(e);
