@@ -346,7 +346,7 @@ methods: {
 
 					recaptcha.execute('registration').then((token) => {
 						console.log(token) // Will print the token
-						this.googleToken = token;
+						// this.googleToken = token;
 
 						let data = {
 							first_name: this.form.first_name,
@@ -355,7 +355,7 @@ methods: {
 							password: this.form.password,
 							confirm_password: this.form.confirmpassword,
 							main_interest: (this.main_interest)?this.main_interest:'',					
-							googleToken: this.googleToken,
+							google_token: token,
 						};
 
 						this.$store.dispatch('auth/buyerRegistration_a', {
