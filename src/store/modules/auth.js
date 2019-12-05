@@ -26,6 +26,17 @@ const state = {
 			url: base_url+'/v1/forgot-password',  
 		},
 
+		validateCode: {
+			method: 'post',
+			url: base_url+'/v1/validate-code',  
+		},
+
+
+		resetPassword: {
+			method: 'post',
+			url: base_url+'/v1/reset-password',  
+		},
+
 		login: {
 			method: 'post',
 			url: base_url+'/v1/login',  
@@ -456,19 +467,70 @@ const actions = {
 
 
 	sendPasscode_a(context, data){
-
 		return new Promise((resolve, reject) =>{
+
+			var headers = {
+				"content-type": "application/json",
+			};
+
 			axios({
 				url: state.api.forgotPassword.url,
 				method: state.api.forgotPassword.method,
-				data: data
+				headers: headers,
+				data: JSON.stringify(data),
 			})
 			.then(response => {
 				resolve(response);
 			})		
 			.catch(error=>{
 				reject(error.response);
+			})	
+		})
+	},
 
+
+	verifyPasscode_a(context, data){
+		return new Promise((resolve, reject) =>{
+
+			var headers = {
+				"content-type": "application/json",
+			};
+
+			axios({
+				url: state.api.validateCode.url,
+				method: state.api.validateCode.method,
+				headers: headers,
+				data: JSON.stringify(data),
+			})
+			.then(response => {
+				resolve(response);
+			})		
+			.catch(error=>{
+				reject(error.response);
+			})	
+		})
+	},
+
+
+
+	resetPassword_a(context, data){
+		return new Promise((resolve, reject) =>{
+
+			var headers = {
+				"content-type": "application/json",
+			};
+
+			axios({
+				url: state.api.resetPassword.url,
+				method: state.api.resetPassword.method,
+				headers: headers,
+				data: JSON.stringify(data),
+			})
+			.then(response => {
+				resolve(response);
+			})		
+			.catch(error=>{
+				reject(error.response);
 			})	
 		})
 	},

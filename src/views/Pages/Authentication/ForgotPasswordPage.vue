@@ -13,12 +13,12 @@
 
               	<v-flex xs12 class="text-xs-center mt-3">
 	                <v-toolbar absolute dense flat class="transparent pos-top-1px">
-	                  <v-toolbar-title class="body-2 grey--text cursor-pointer"
-	                    @click="stageHandler" v-if="stage !== 1">Back</v-toolbar-title>
-	                  <v-spacer></v-spacer>
-	                  <!-- <v-btn icon :to="{ name: 'pages/authentication/LoginPage' }">
-	                    <v-icon>close</v-icon>
-	                  </v-btn> -->
+	                  	<v-toolbar-title class="body-2 grey--text cursor-pointer"
+	                    @click="stageHandler" v-if="stage !== 1 && stage !== 4">Back</v-toolbar-title>
+	                  	<v-spacer></v-spacer>
+	                  	<!-- <v-btn icon :to="{ name: 'pages/authentication/LoginPage' }">
+	                    	<v-icon>close</v-icon>
+	                  	</v-btn> -->
 	                </v-toolbar>
 
 					<a href="https://buyanylight.com" target="_blank">
@@ -26,28 +26,32 @@
 					</a>
             	</v-flex>
 
-              	<v-flex xs12 class="text-xs-center mt-3">
-                <v-stepper v-model="stage" class="no-box-shadow reset-top-padding border-radius6">
-                  <v-stepper-header class="hide">
-                    <v-stepper-step step="1" :complete="stage > 1">Name of step 1</v-stepper-step>
-                    <v-stepper-step step="2" :complete="stage > 2">Name of step 2</v-stepper-step>
-                    <v-stepper-step step="3">Name of step 3</v-stepper-step>
-                  </v-stepper-header>
+				<v-flex xs12 class="text-xs-center mt-3">
+				    <v-stepper v-model="stage" class="no-box-shadow reset-top-padding border-radius6">
+				        <v-stepper-header class="hide">
+				            <v-stepper-step step="1" :complete="stage > 1">Name of step 1</v-stepper-step>
+				            <v-stepper-step step="2" :complete="stage > 2">Name of step 2</v-stepper-step>
+				            <v-stepper-step step="3" :complete="stage > 3">Name of step 3</v-stepper-step>
+				            <v-stepper-step step="4">Name of step 4</v-stepper-step>
+				        </v-stepper-header>
 
-                  <v-stepper-content step="1" class="px-0">
-                    <send-passcode @next="sendPasscodeSuccessHandler"></send-passcode>
-                  </v-stepper-content>
+				        <v-stepper-content step="1" class="px-0">
+				            <send-passcode @next="sendPasscodeSuccessHandler"></send-passcode>
+				        </v-stepper-content>
 
-                  <v-stepper-content step="2" class="px-0">
-                    <verify-passcode @next="verifyPasscodeSuccessHandler" :email="email"></verify-passcode>
-                  </v-stepper-content>
+				        <v-stepper-content step="2" class="px-0">
+				            <verify-passcode @next="verifyPasscodeSuccessHandler" :email="email"></verify-passcode>
+				        </v-stepper-content>
 
-                  <v-stepper-content step="3" class="px-0">
-                    <password-reset @next="resetPasswordSuccessHandler" :code="code" :email="email"></password-reset>
-                  </v-stepper-content>
-                </v-stepper>
-              </v-flex>
+				        <v-stepper-content step="3" class="px-0">
+				            <password-reset @next="resetPasswordSuccessHandler" :code="code" :email="email"></password-reset>
+				        </v-stepper-content>
 
+				        <v-stepper-content step="4" class="px-0">
+				            <password-reset-success></password-reset-success>
+				        </v-stepper-content>
+				    </v-stepper>
+				</v-flex>
 
             </v-layout>
           </v-card>
@@ -71,12 +75,14 @@
   import SendPasscode from '@/views/Pages/Authentication/ForgotPasswordWizard/SendPasscode'
   import PasswordReset from '@/views/Pages/Authentication/ForgotPasswordWizard/PasswordReset'
   import VerifyPasscode from '@/views/Pages/Authentication/ForgotPasswordWizard/VerifyPasscode'
+  import PasswordResetSuccess from '@/views/Pages/Authentication/ForgotPasswordWizard/PasswordResetSuccess'
 
   export default {
     components: {
       SendPasscode,
       VerifyPasscode,
-      PasswordReset
+      PasswordReset,
+      PasswordResetSuccess,
     },
     data () {
       return {
@@ -102,7 +108,8 @@
         this.stage = 3
       },
       resetPasswordSuccessHandler () {
-        this.snackbar = true
+		this.snackbar = true        
+        this.stage = 4
       }
     }
   }
@@ -117,7 +124,7 @@
 }
 
 .reset-password-cont {
-	width: 350px;
+	width: 450px;
 }
 	
 </style>

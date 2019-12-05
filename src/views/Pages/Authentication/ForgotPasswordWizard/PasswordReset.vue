@@ -37,6 +37,11 @@
             <v-flex xs12 px-2>
               <v-layout row wrap text-xs-center>
                 <!-- Login form submit -->
+                <v-flex xs12 class="no-mrpd" v-if="errorText">
+	            	<p style="color: red;">
+	            		Something went wrong please try again!
+	            	</p>
+                </v-flex>
                 <v-flex xs12 class="no-mrpd">
                   <v-btn
                     color="act"
@@ -94,7 +99,7 @@ export default {
 		passwords:{
 		    newPassword: {
 		        required: 'Password required.',
-		        minLen: "Password min length invalid.",
+		        minLen: "Minimum of 6 characters.",
 		    },
 		    newPasswordConfirm: {
 		        sameAs: 'Password confirmation invalid.',
@@ -113,7 +118,8 @@ export default {
 		        newPassword: '', 
 		        newPasswordConfirm: '', 
 	        },
-	        loader: false
+	        loader: false,
+	        errorText: false,
 	    }
 	},
 
@@ -121,12 +127,35 @@ export default {
 	    
 	    submit () {
 	        this.loader=true;
-	        setTimeout(()=> {
-	            this.loader=false; 
-	            this.$emit('next', {
-	                next: true
-	            });
-	        }, 2000);
+
+
+	        // setTimeout(()=> {
+	        //     this.loader=false; 
+	        //     this.$emit('next', { next: true, });
+	        // }, 2000);
+
+			this.$store.dispatch('auth/resetPassword_a',{
+				email: this.email,
+				reset_code: this.code,			    
+			    password: this.passwords.newPassword,
+			    confirm_password: this.passwords.newPasswordConfirm,
+			})
+			.then((rspns)=>{			
+	    		this.loader = false			
+    		  	this.errorText = false;
+	            this.$emit('next', { next: true, });
+			})
+			.catch((e)=>{
+			  	this.loader = false;
+			  	this.errorText = true;
+				console.log('Error: ' + e);
+			});
+
+
+{
+
+}
+
 	    },
 
 	    resetForm () {

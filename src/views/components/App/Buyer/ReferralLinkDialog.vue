@@ -33,7 +33,7 @@
 			        		<v-text-field 
 			        		id="referralUrl"
 			        		readonly
-			        		:value="'https://buyanylight.com/ieo/'+authUser.referral_code+'#section-bal-token'"
+			        		:value="'https://buyanylight.com/ieo?code='+authUser.referral_code+'#section-bal-token'"
 			        		:append-outer-icon="'fas fa-copy'"
 							@click:append-outer="copyLink"></v-text-field>
 						</v-flex>

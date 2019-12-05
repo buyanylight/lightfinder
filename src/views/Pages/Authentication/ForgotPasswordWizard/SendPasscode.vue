@@ -3,14 +3,22 @@
     <v-flex xs12 center-align>
       <v-layout wrap>
         <v-flex xs12 class="text-xs-center">
-          <!-- <img src="/static/forgotpassword-vuse.svg" alt="" height="145px"> -->
-          <div class="headline">Forgot Password?</div>
-          <p class="centered headline-caption-text mt-3 px-4">Provide your e-mail address to reset your password</p>
+			<!-- <img src="/static/forgotpassword-vuse.svg" alt="" height="145px"> -->
+			<div class="headline">Forgot Password?</div>
+			<p class="centered headline-caption-text mt-3 px-4">
+				We will send an OTP code on the email below.<br>
+				Please double check your email address.
+      		</p>
         </v-flex>
       </v-layout>
       <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="sendpasscode">
         <v-container grid-list-xl fluid>
           <v-layout wrap pa-4>
+            <v-flex xs12 pa-0 v-if="errorSending">
+            	<p style="color: red;">
+            		Something went wrong please check email and try again!
+            	</p>
+            </v-flex>
             <v-flex xs12 pa-0>
               <v-text-field
                 color="primary"
@@ -54,28 +62,48 @@
       email: { required, email }
     },
     validationMessages: {
-      email: {
-        required: 'Please enter email',
-        email: 'Email must be valid'
-      }
+      	email: {
+	        required: 'Please enter email',
+	        email: 'Email must be valid'
+      	}
     },
 
+
     created () {
+
     },
 
     data () { return {
         errors: null,
-        email: null,
-        loader: false
+        email: 'yabuking84@gmail.com',
+        loader: false,
+        errorSending: false,
     }},
 
     methods: {
     	submit () {
     		this.loader = true
-    		setTimeout(() => {
-    		  this.loader = false
-    		  this.$emit('next', { email: this.email })
-    		}, 3000)
+
+    		// setTimeout(() => {
+    		//   this.loader = false
+    		//   this.$emit('next', { email: this.email })
+    		// }, 3000)
+
+			this.$store.dispatch('auth/sendPasscode_a',{
+				email: this.email,
+			})
+			.then((rspns)=>{
+	    		this.loader = false
+    		  	this.errorSending = false;
+	    		this.$emit('next', { email: this.email })
+			})
+			.catch((e)=>{
+    		  	this.loader = false;
+    		  	this.errorSending = true;
+				console.log('Error: ' + e);
+			});
+
+
     	},
     	resetForm () {
 			// this.form = Object.assign({}, defaultForm)
@@ -86,8 +114,8 @@
 
     watch: {
 
-    }
-  }
+    },
+}
 </script>
 
 
