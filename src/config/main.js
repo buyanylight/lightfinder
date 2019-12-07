@@ -4,6 +4,7 @@ const env = {
 	apiURL : process.env.APIURL,
 	socketURL : process.env.SOCKETURL,
 	websiteURL : process.env.WEBSITEURL,
+	mainURL : process.env.MAINWEBSITEURL,
 	devMode : process.env.DEVMODE,
 	defaultMaxInqs : process.env.DEFAULTMAXINQS,
 	merchant_key : process.env.MERCHANT_KEY,
@@ -12,15 +13,8 @@ const env = {
 };
 
 export default {
-	apiURL: env.apiURL,
-	socketURL: env.socketURL,
-	websiteURL: env.websiteURL,
-	devMode: env.devMode,
-	defaultMaxInqs: env.defaultMaxInqs,
-	merchant_key: env.merchant_key,
-	eur_convesion_url: env.eur_convesion_url,
-	crypto_convesion_url: env.crypto_convesion_url,
-
+	...env,
+	
 	awss3: {
 		signingURL:env.apiURL+"/v1/aws-s3-signature",
         urls: {

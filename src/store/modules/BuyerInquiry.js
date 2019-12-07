@@ -6,6 +6,7 @@ import router from '@/router'
 import config from '@/config/index'
 
 const base_url = config.main.apiURL;
+const main_website_url = config.main.mainURL;
 
 const state = {
 	api: {
@@ -21,7 +22,13 @@ const state = {
 
 		getTokens: {
 			method 	:'get',
-			url 	:'https://buyanylight.com/get-tokens'
+			url 	:main_website_url+'/get-tokens'
+		},
+
+		getReferralTransactions: {
+			method 	:'get',
+			// url 	:main_website_url+'/get-trxn'
+			url 	:'http://192.168.1.204:8004/get-trxn'
 		},
 
 		getInquiry: {
@@ -139,14 +146,22 @@ const mutations = {
 	// },
 
 }
+
+function errorHandler(error,reject) {
+	if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+		console.log("EXPIRED")
+		router.push({'name': 'Logout'});
+	} else {
+		console.log("Error!", error)
+		reject(error)
+	}
+}
 	
 const actions = {
 
 
 	getBalTokens_a(context,data){
 		return new Promise((resolve, reject) =>{
-
-
 
 			var headers = {
 				token: localStorage.access_token,
@@ -162,17 +177,32 @@ const actions = {
 			.then(response => {
 				console.log(response)
 				resolve(response.data);
-			}).catch(error => {
-				if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-					console.log("EXPIRED")
-					router.push({'name': 'Logout'});
-				} else {
-					console.log("normal error!")
-					reject(error)
-				}
+			})
+			.catch((error)=>{ 
+				errorHandler(error,reject); 
 			});
 		})
 	},
+
+
+	getReferralTransactions_a(context,data){
+		return new Promise((resolve, reject) =>{
+
+			axios({
+				method: state.api.getReferralTransactions.method,
+				url: state.api.getReferralTransactions.url+'?code='+data.code,
+			})
+			.then(response => {
+				console.log(response)
+				resolve(response.data);
+			})
+			.catch((error)=>{ 
+				errorHandler(error,reject); 
+			});
+		})
+	},
+
+
 
 	getActiveSubscription_a(context,data){
 		return new Promise((resolve, reject) => {
@@ -191,13 +221,7 @@ const actions = {
 				resolve(response.data[0]);
 			})
 			.catch(error => {
-				if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-					console.log("EXPIRED")
-					router.push({'name': 'Logout'});
-				} else {
-					console.log("normal error!")
-					reject(error)
-				}
+				errorHandler(error,reject); 
 			});
 		})
 	},
@@ -220,6 +244,7 @@ const actions = {
 				resolve(response.data);
 			})
 			.catch(error => {
+				errorHandler(error,reject); 
 				if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
 					console.log("EXPIRED")
 					router.push({'name': 'Logout'});
