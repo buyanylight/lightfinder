@@ -57,7 +57,7 @@
 		</v-flex>
 
 		<v-flex>
-			<v-btn> You have {{ baltkn }} BAL Tokens</v-btn>
+			<v-btn> You have {{ numberWithCommas(baltkn) }} BAL Tokens</v-btn>
 
 			<v-btn color="primary">
 				<a href="https://buyanylight.com/ieo#section-bal-token" style="color: white;" target="_blank">Buy BAL Tokens</a>
@@ -80,10 +80,12 @@ import UpgradeAccountDialog from "@/views/Components/App/Buyer/UpgradeAccountDia
 import ReferralLinkDialog from "@/views/Components/App/Buyer/ReferralLinkDialog";
 import inqMixin from "@/mixins/inquiry";
 import inqEvntBs from "@/bus/inquiry"
+import hlpr from '@/mixins/helpers'
 
 export default {
 mixins:[
 	inqMixin,
+	hlpr,
 ],
 
 components:{

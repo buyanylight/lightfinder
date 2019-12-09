@@ -5,11 +5,12 @@ const env = {
 	socketURL : process.env.SOCKETURL,
 	websiteURL : process.env.WEBSITEURL,
 	mainURL : process.env.MAINWEBSITEURL,
-	devMode : process.env.DEVMODE,
+	devMode : (process.env.DEVMODE=='true')?true:false,
 	defaultMaxInqs : process.env.DEFAULTMAXINQS,
 	merchant_key : process.env.MERCHANT_KEY,
 	eur_convesion_url : process.env.EUR_CONVESION_URL,
 	crypto_convesion_url : process.env.CRYPTO_CONVESION_URL,
+	google_recaptcha_key : process.env.GOOGLE_RECAPTCHA_KEY,
 };
 
 export default {

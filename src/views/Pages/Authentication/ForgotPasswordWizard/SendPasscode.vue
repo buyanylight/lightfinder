@@ -75,7 +75,8 @@
 
     data () { return {
         errors: null,
-        email: 'yabuking84@gmail.com',
+        // email: 'yabuking84@gmail.com',
+        email: null,
         loader: false,
         errorSending: false,
     }},

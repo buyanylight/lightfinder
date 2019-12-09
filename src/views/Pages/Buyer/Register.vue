@@ -341,7 +341,7 @@ methods: {
 
 				this.formLoading = true;
 
-				load('6Lc8aL4UAAAAAF_ke1eo_DaLKtrNK3Y1xTC6lQKe')
+				load(config.main.google_recaptcha_key)
 				.then((recaptcha) => {
 
 					recaptcha.execute('registration').then((token) => {

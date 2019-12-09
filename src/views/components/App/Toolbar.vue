@@ -60,7 +60,7 @@ app flat>
         dense>
         	<!-- v-if="index <= 10" -->
             <template v-for="(notification, index) in notifications">
-                <v-list-tile  :key="'not_'+index" @click="gotoNotfication(notification)">
+                <v-list-tile  :key="'not_'+index" @click="gotoNotfication(notification,'normalType')">
                     <!-- <v-list-tile-title>{{notification.title  }}</v-list-tile-title> <br/> -->
                     <v-list-tile-sub-title 
                     :class="notification.isRead ? 'grey--text' : 'black--text'">
@@ -99,11 +99,7 @@ app flat>
     <!-- msgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsg -->
     <v-menu offset-y transition="scale-transition" allow-overflow fixed>
         <template v-slot:activator="{ on }">
-            <v-btn 
-            flat icon 
-            v-on="on" 
-            class="ml-4" 
-            >
+            <v-btn flat icon v-on="on" class="ml-4">
                 <v-badge color="red">
                     <template v-slot:badge  v-if="unreadMsg>0" >
                         <span style="font-size:10px;">{{ unreadMsg }}</span>
@@ -123,7 +119,7 @@ app flat>
         ref="message_list" 
         dense>
             <template v-for="(notificationMsg, index) in notificationMsgs">
-                <v-list-tile  :key="'not_'+index" @click="gotoNotfication(notificationMsg)">
+                <v-list-tile  :key="'not_'+index" @click="gotoNotfication(notificationMsg,'messageType')">
                     <!-- <v-list-tile-title
                     :class="notification.isRead ? 'grey--text' : 'black--text'">
                     	{{notification.title}}
@@ -179,11 +175,17 @@ app flat>
     <v-spacer></v-spacer>
 
     <v-menu offset-x fixed>
-        <v-avatar slot="activator" size="40">
-            <div :style="avatarBgImage">
-                <!-- <img :src="authUser.avatar" :alt="authUser.name"> -->
-            </div>
-        </v-avatar>
+        
+        <!-- <v-avatar slot="activator" size="40">
+            <div :style="avatarBgImage"></div>
+        </v-avatar> -->
+
+        <template v-slot:activator="{ on }">        
+	        <v-avatar v-on="on" size="40" 
+	        style="min-width: 40px; cursor: pointer;">
+	            <div :style="avatarBgImage"></div>
+	        </v-avatar>
+    	</template>
 
         <!-- <v-list dense  style="position: fixed;"> -->
         <v-list dense >
@@ -425,6 +427,7 @@ computed: {
 
 methods: {
 
+
     toggleMiniVariantMode () {
       this.$store.dispatch('toggleMiniVariantMode')
       this.$store.dispatch('toggleMiniVarient')
@@ -516,7 +519,9 @@ methods: {
 
 
 
-
+    test(){
+    	alert('test');
+    },
 
 
 
@@ -525,11 +530,14 @@ methods: {
     // gotonotification
     // /////////////////////////////////////////////////////////
 
-    gotoNotfication(ntfctn){
-    	// console.log('ntfctn',ntfctn);
+    gotoNotfication(ntfctn,ntfctnType){
+    	console.log('ntfctn',ntfctn);
         this.showSnackbar = false;
         this.$store.dispatch('ntfctns/gotoNotfication_a',ntfctn);
-    	this.$store.dispatch('ntfctns/markNotifasRead_a',ntfctn);
+    	this.$store.dispatch('ntfctns/markNotifasRead_a',{
+    		ntfctn,
+    		ntfctnType,
+    	});
         // console.log(this.$refs);
 
     },

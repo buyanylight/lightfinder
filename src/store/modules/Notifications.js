@@ -558,14 +558,18 @@ const actions = {
 							dataType = 'inquiry';
 						break;
 
-						// supplier
+						case 'adminApprovedBid': 
+							title=`BAL has Approved Bid for Inquiry # ${ ntfctn.data.inquiry_id }`;
+							dataType = 'inquiry';
+						break;
+
 						default : 
 							title='Others';
 							dataType = 'inquiry';
 						break;
 					}
 
-										
+
 					return {
 						// title:         ntfctn.created_at+' = '+title,
 						title:         title,
@@ -775,34 +779,59 @@ const actions = {
 
 
 
-   markNotifasRead_a(context,ntfctn) {
-
+   markNotifasRead_a(context,data) {
+   		var ntfctn = data.ntfctn;
+   		var ntfctnType = data.ntfctnType;
 		return new Promise((resolve, reject) => {
 
-			  var headers = {token:localStorage.access_token};
-
-			   axios({
-					method: state.api.markNotifasRead.method,
-					url: state.api.markNotifasRead.url + `/${ntfctn.data.notification_id}/read`,
-					headers: headers,
-				})
-				.then(response => {
-					resolve(response.data);
+			var headers = {token:localStorage.access_token};
+		   	axios({
+				method: state.api.markNotifasRead.method,
+				url: state.api.markNotifasRead.url + `/${ntfctn.data.notification_id}/read`,
+				headers: headers,
+			})
+			.then(response => {
+				resolve(response.data);
+				
+				// deduct unread
+				if(!ntfctn.isRead) {
 					
-					// deduct unread
-					if(!ntfctn.isRead) {
-						state.unread = parseInt(state.unread) - 1
-						ntfctn.isRead = true;
-					}
+					if(ntfctnType=='normalType')
+					state.unread = parseInt(state.unread) - 1;
+					else if(ntfctnType=='messageType')
+					state.unreadMsgs = parseInt(state.unreadMsgs) - 1;
 					
+					ntfctn.isRead = true;
+				}
+				
 
-				})
-				.catch(error => {
-					// // console.log(error);
-					// if(actions.checkToken(error)) {
-						reject(error);
-					// }
-				})
+			})
+			.catch(error => {
+				// // console.log(error);
+				// if(actions.checkToken(error)) {
+					reject(error);
+				// }
+			})
+
+
+
+
+				// setTimeout(()=>{
+
+				// 	resolve(ntfctn);
+
+				// 	// deduct unread
+				// 	if(!ntfctn.isRead) {
+						
+				// 		if(ntfctnType=='normalType')
+				// 		state.unread = parseInt(state.unread) - 1;
+				// 		else if(ntfctnType=='messageType')
+				// 		state.unreadMsgs = parseInt(state.unreadMsgs) - 1;
+						
+				// 		ntfctn.isRead = true;
+				// 	}
+
+				// },1000);
 
 		});
 

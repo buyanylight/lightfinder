@@ -60,7 +60,7 @@ app flat>
 		dense>
 			<!-- v-if="index <= 10" -->
 			<template v-for="(notification, index) in notifications">
-				<v-list-tile  :key="'not_'+index" @click="gotoNotfication(notification)">
+				<v-list-tile  :key="'not_'+index" @click="gotoNotfication(notification,'normalType')">
 					<!-- <v-list-tile-title>{{notification.title  }}</v-list-tile-title> <br/> -->
 					<v-list-tile-sub-title 
 					:class="notification.isRead ? 'grey--text' : 'black--text'">
@@ -123,7 +123,7 @@ app flat>
 		ref="message_list" 
 		dense>
 			<template v-for="(notificationMsg, index) in notificationMsgs">
-				<v-list-tile  :key="'not_'+index" @click="gotoNotfication(notificationMsg)">
+				<v-list-tile  :key="'not_'+index" @click="gotoNotfication(notificationMsg,'messageType')">
 					<!-- <v-list-tile-title
 					:class="notification.isRead ? 'grey--text' : 'black--text'">
 						{{notification.title}}
@@ -513,12 +513,15 @@ methods: {
 	// gotonotification
 	// /////////////////////////////////////////////////////////
 
-	gotoNotfication(ntfctn){
+    gotoNotfication(ntfctn,ntfctnType){
 
 		console.log('ntfctn',ntfctn);
 		this.showSnackbar = false;
 		this.$store.dispatch('ntfctns/gotoNotfication_a',ntfctn);
-		this.$store.dispatch('ntfctns/markNotifasRead_a',ntfctn);
+		this.$store.dispatch('ntfctns/markNotifasRead_a',{
+    		ntfctn,
+    		ntfctnType,
+    	});
 		// console.log(this.$refs);
 
 	},

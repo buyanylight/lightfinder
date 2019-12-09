@@ -27,8 +27,8 @@ const state = {
 
 		getReferralTransactions: {
 			method 	:'get',
-			// url 	:main_website_url+'/get-trxn'
 			url 	:'http://192.168.1.204:8004/get-trxn'
+			// url 	:main_website_url+'/get-trxn'
 		},
 
 		getInquiry: {

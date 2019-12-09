@@ -656,6 +656,7 @@ import vue2Dropzone from 'vue2-dropzone'
 
 import config from '@/config/index'
 
+import { load } from 'recaptcha-v3'
 
 const dform = {
   // // 1st step 	
@@ -992,58 +993,84 @@ export default {
 
 	acceptTerms() {
 
-		let data = {
-			'first_name': this.form.firstname,
-			'last_name': this.form.lastname,
-			'email': this.form.email,
-			'password': this.form.password,
-			'confirm_password': this.form.confirmpassword,
-			'website': this.form.companywebsite,
-			'street': this.form.street,
-			'city': this.form.city,
-			'country_id': this.form.country,
 
-			'phone': this.form.phonenumber,
-			'mobile': this.form.mobilenumber,
-			'wechatid': this.form.wechatid,
+		load(config.main.google_recaptcha_key)
+		.then((recaptcha) => {
 
-			'company_name': this.form.companyname,
-			'job_title': this.form.designation,
+			recaptcha.execute('registration').then((token) => {
+			console.log(token) // Will print the token
+			// this.googleToken = token;
 
-			'factory_address': this.form.factoryaddress,
-			'company_established_year': this.form.companyestablishedyear,
-			'no_of_employees_factory': this.form.numberofworkersinfactory,
-			'no_of_employees_total': this.form.numberofemployees,
+				let data = {
+					'first_name': this.form.firstname,
+					'last_name': this.form.lastname,
+					'email': this.form.email,
+					'password': this.form.password,
+					'confirm_password': this.form.confirmpassword,
+					'website': this.form.companywebsite,
+					'street': this.form.street,
+					'city': this.form.city,
+					'country_id': this.form.country,
 
-			'bank_account_name': this.form.accountname,
-			'bank_account_no': this.form.accountnumber,
-			'bank_iban': this.form.iban,
-			'bank_name': this.form.bankname,
-			'bank_address': this.form.bankaddress,
-			'bank_swift': this.form.swiftcode,
-			'categories': this.categories,
-			
-			main_interest: (this.main_interest)?this.main_interest:'',
-		};
+					'phone': this.form.phonenumber,
+					'mobile': this.form.mobilenumber,
+					'wechatid': this.form.wechatid,
 
-		// console.log(data);
+					'company_name': this.form.companyname,
+					'job_title': this.form.designation,
 
-		this.formLoading = true;
+					'factory_address': this.form.factoryaddress,
+					'company_established_year': this.form.companyestablishedyear,
+					'no_of_employees_factory': this.form.numberofworkersinfactory,
+					'no_of_employees_total': this.form.numberofemployees,
 
-		this.$store.dispatch("auth/supplierRegistration_a", {
-		  data: data
+					'bank_account_name': this.form.accountname,
+					'bank_account_no': this.form.accountnumber,
+					'bank_iban': this.form.iban,
+					'bank_name': this.form.bankname,
+					'bank_address': this.form.bankaddress,
+					'bank_swift': this.form.swiftcode,
+					'categories': this.categories,
+					
+					main_interest: (this.main_interest)?this.main_interest:'',
+					google_token: token,
+				};
+
+				// console.log(data);
+
+				this.formLoading = true;
+
+				this.$store.dispatch("auth/supplierRegistration_a", {
+				  data: data
+				})
+				.then(response => {
+				  	this.dialog = false;
+				  	this.dialog2 = true;
+				})
+				.catch(e => {
+				  	console.log(e);
+				  	this.formLoading = false;
+				})
+				.finally(() => {
+				  	this.formLoading = false;
+				});
+
+
+			})
+			.catch((e)=>{
+				console.log('Google Captcha Error 1: ',e);
+				this.formLoading = false;
+				this.snackbar_error = true;
+			});
+
 		})
-		.then(response => {
-		  	this.dialog = false;
-		  	this.dialog2 = true;
-		})
-		.catch(e => {
-		  	console.log(e);
-		  	this.formLoading = false;
-		})
-		.finally(() => {
-		  	this.formLoading = false;
+		.catch((e)=>{
+			console.log('Google Captcha Error 2: ',e);
+			this.formLoading = false;
+			this.snackbar_error = true;
 		});
+
+
 
 
 	},

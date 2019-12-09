@@ -13,8 +13,9 @@
 		        <!-- <h3 class="mr-4">{{ authUser.uuid }}</h3> -->
 		        <h3 class="mr-4" v-if="authUser.role==roles.admin.id">ADMIN</h3>
 		        <h3 class="mr-4" v-else-if="authUser.role==roles.buyer.id">BUYER</h3>
-		        <h3 class="mr-4" v-else-if="authUser.role==roles.supplier.id">SUPPLIER</h3>
+		        <h3 class="mr-4" v-else-if="authUser.role==roles.supplier.id">SUPPLIER</h3>		        
 		    </v-btn>
+		    <!-- <p><pre>{{ configMain }}</pre></p> -->
 		    </template>
 		    <!-- dddddddddddddddddddddddddddddddddddddddddd -->
 		    <!-- devMode -->
@@ -32,13 +33,11 @@ export default {
 
 data() { return {
     roles: config.auth.role,
+    devMode: config.main.devMode,
+    configMain: config.main,
 }},
 
 computed: {
-    devMode(){
-    	return config.main.devMode;
-    },
-
     authUser () {
         return this.$store.state.auth.auth_user;
     },
