@@ -86,10 +86,20 @@ app flat>
             <!-- loading for mugen infinite scroll -->
 
 
-            <!-- <v-list-tile @click="">
-                <v-list-tile-sub-title class="black--text text-xs-center">See All</v-list-tile-sub-title>
+           <!--  <v-list-tile class="bottom-tile">
+                <v-list-tile-sub-title class="black--text text-xs-center">
+                	<v-layout>
+                		<v-btn flat color="">Read All</v-btn>
+                	</v-layout>
+                </v-list-tile-sub-title>
            	</v-list-tile> -->
-        </v-list>     
+        </v-list>
+		
+    	<v-layout justify-end class="bottom-tile" v-if="notifications && notifications.length">
+    		<v-btn flat small color="dark" @click="readAll('normalType')" :loading="ntfctnRALdng">Read All</v-btn>
+    	</v-layout>
+
+
     </v-menu>
     <!-- bellbellbellbellbellbellbellbellbellbellbellbellbellbellbellbellbellbellbell -->
     <!-- bell notifications -->
@@ -154,6 +164,10 @@ app flat>
            	</v-list-tile> -->
         </v-list>
 
+    	<v-layout justify-end class="bottom-tile" v-if="notificationMsgs && notificationMsgs.length">
+    		<v-btn flat small color="dark" @click="readAll('messageType')" :loading="msgsRALdng">Read All</v-btn>
+    	</v-layout>
+
 		
     </v-menu>
     <!-- msgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsg -->
@@ -170,7 +184,8 @@ app flat>
 	<v-btn @click="bounce()">bounce</v-btn> -->
 	<!-- ttttttttttttttttttttttttttttttttttttttttt -->
 	<!-- test -->
-	<inquiry-counter v-if="isRole('buyer')"></inquiry-counter>
+	
+	<inquiry-counter v-if="isRole('buyer') && $route.meta.package_type!='my-home' && $route.meta.package_type!='my-tower' "></inquiry-counter>
 
     <v-spacer></v-spacer>
 
@@ -306,6 +321,8 @@ import MsgBus from "@/bus/messaging";
 
 import MugenScroll from 'vue-mugen-scroll'
 
+import { forEach } from 'lodash'
+
 export default {
 mixins:[
 	hlprs,
@@ -343,7 +360,8 @@ data() { return {
     limit: 20,
 
 
-
+	ntfctnRALdng: false,
+	msgsRALdng: false,
 
 }},
 
@@ -524,7 +542,32 @@ methods: {
     },
 
 
+	readAll(ntfctnType){
+		this.ntfctnRALdng = true;
+		this.msgsRALdng = true;
 
+    	this.$store.dispatch('ntfctns/readAll_a',{
+    		ntfctnType,
+    	})
+    	.then((rspns)=>{
+
+    		if(ntfctnType=='normalType') {	    		
+	    		this.notifications.forEach((item,i)=>{
+	    			item.isRead = true;
+	    		});
+    		}
+    		else if(ntfctnType=='messageType') {
+	    		this.notificationMsgs.forEach((item,i)=>{
+	    			item.isRead = true;
+	    		});
+    		}
+			
+    	})
+    	.finally((rspns)=>{
+			this.ntfctnRALdng = false;
+			this.msgsRALdng = false;
+    	});
+	},
 
     
     // gotonotification
@@ -537,6 +580,9 @@ methods: {
     	this.$store.dispatch('ntfctns/markNotifasRead_a',{
     		ntfctn,
     		ntfctnType,
+    	})
+    	.then((rspns)=>{
+			ntfctn.isRead = true;
     	});
         // console.log(this.$refs);
 
@@ -691,8 +737,10 @@ created()  {
 }
 
 #notification_list {
-	max-height: 500px;
+	max-height: 495px;
 	overflow-y: auto;
+    padding-bottom: 0;
+    // padding-top: 0;
 }
 
 #message_list {
@@ -713,5 +761,22 @@ created()  {
 // 	position: fixed;
 // }
 
+
+.bottom-tile {
+	background: #fff;
+    border-top: 1px solid #e0e0e0;	
+
+    /deep/ .v-btn__content {
+    	font-size: 12px;
+	    font-weight: bold;
+    }
+    /deep/ .v-btn__loading {
+    	color: #000;
+    	.v-progress-circular {
+			height: 15px !important;
+			width: 15px !important;
+    	}
+    }
+}
 
 </style>

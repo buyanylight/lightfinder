@@ -32,6 +32,7 @@
 						placeholder=" "
 						required
 						:error-messages="fieldErrors('form.email')"
+						@keyup.enter="$v.$invalid ? null : submit()"
 						@blur="$v.form.email.$touch()"
 					  ></v-text-field>
 
@@ -43,6 +44,7 @@
 						type="password"
 						required
 						:error-messages="fieldErrors('form.password')"
+						@keyup.enter="$v.$invalid ? null : submit()"
 						@blur="$v.form.password.$touch()"
 					  ></v-text-field>
 					  <!-- <div class="width-150x margin-horiz-center">
@@ -62,14 +64,13 @@
 					  <v-layout row wrap text-xs-center>
 						<!-- Login form submit -->
 						<v-flex xs12 class="">
-						  <v-btn
+						  	<v-btn
 							color="md-black-500"
 							@click="$v.$invalid ? null : submit()"
 							:disabled="$v.$invalid"
 							:loading="loading"
 							block
-							:class="$v.$invalid ? '' : 'white--text'"
-						  >Login</v-btn>
+							:class="$v.$invalid ? '' : 'white--text'">Login</v-btn>
 						</v-flex>
 
 						<!-- social login -->

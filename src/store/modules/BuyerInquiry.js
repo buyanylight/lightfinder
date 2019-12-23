@@ -8,6 +8,8 @@ import config from '@/config/index'
 const base_url = config.main.apiURL;
 const main_website_url = config.main.mainURL;
 
+const get_the_url = (config.main.devMode)?'http://192.168.1.204:8004':main_website_url;
+
 const state = {
 	api: {
 		getInquiries: {
@@ -22,13 +24,12 @@ const state = {
 
 		getTokens: {
 			method 	:'get',
-			url 	:main_website_url+'/get-tokens'
+			url 	:get_the_url+'/get-tokens'
 		},
 
 		getReferralTransactions: {
 			method 	:'get',
-			url 	:'http://192.168.1.204:8004/get-trxn'
-			// url 	:main_website_url+'/get-trxn'
+			url 	:get_the_url+'/get-trxn'
 		},
 
 		getInquiry: {
@@ -245,13 +246,6 @@ const actions = {
 			})
 			.catch(error => {
 				errorHandler(error,reject); 
-				if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-					console.log("EXPIRED")
-					router.push({'name': 'Logout'});
-				} else {
-					console.log("normal error!")
-					reject(error)
-				}
 			});
 		})
 	},
@@ -274,13 +268,7 @@ const actions = {
 				resolve(response.data);
 			})
 			.catch(error => {
-				if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-					console.log("EXPIRED")
-					router.push({'name': 'Logout'});
-				} else {
-					console.log("normal error!")
-					reject(error)
-				}
+				errorHandler(error,reject); 
 			});
 
 		})

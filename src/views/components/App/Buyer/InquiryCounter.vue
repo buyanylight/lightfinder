@@ -57,19 +57,39 @@
 		</v-flex>
 
 		<v-flex>
-			<v-btn> You have {{ numberWithCommas(baltkn) }} BAL Tokens</v-btn>
+			<v-layout row wrap justify-start align-center>
+				<!-- <div style="width: 300px;">
+					<span>You have : </span>
+					<div>					
+						{{ numberWithCommas(baltkn) }} BAL Tokens 
+					</div>
+					<div>					
+						{{ numberWithCommas(6000) }} unconfirmed BAL Tokens
+					</div>
+				</div> -->
 
-			<v-btn color="primary">
-				<a href="https://buyanylight.com/ieo#section-bal-token" style="color: white;" target="_blank">Buy BAL Tokens</a>
-			</v-btn>
+				<!-- <v-btn> You have {{ numberWithCommas(baltkn) }} BAL Tokens</v-btn> -->
+				<v-btn color="primary" 
+				:loading="baltokensLoading"
+				@click="openBALTokensDialog=true">
+					Your BAL Tokens
+				</v-btn>
 
-			<v-btn color="primary" @click="openReferralDialog=true">Referral Link</v-btn>
+
+				<v-btn color="primary">
+					<a href="https://buyanylight.com/ieo#section-bal-token" style="color: white;" target="_blank">Buy BAL Tokens</a>
+				</v-btn>
+
+				<v-btn color="primary" @click="openReferralDialog=true">Referral Link</v-btn>
+			</v-layout>
 		</v-flex>
 	</v-layout>
 
 	<upgrade-account-dialog :openDialog.sync="openDialog"></upgrade-account-dialog>
 
 	<referral-link-dialog :dialog.sync="openReferralDialog"></referral-link-dialog>
+	
+	<bal-tokens-dialog :dialog.sync="openBALTokensDialog"></bal-tokens-dialog>
 		
 </div>
 </template>
@@ -78,6 +98,7 @@
 
 import UpgradeAccountDialog from "@/views/Components/App/Buyer/UpgradeAccountDialog";
 import ReferralLinkDialog from "@/views/Components/App/Buyer/ReferralLinkDialog";
+import BalTokensDialog from "@/views/Components/App/Buyer/BALTokensDialog";
 import inqMixin from "@/mixins/inquiry";
 import inqEvntBs from "@/bus/inquiry"
 import hlpr from '@/mixins/helpers'
@@ -91,6 +112,7 @@ mixins:[
 components:{
 	UpgradeAccountDialog,
 	ReferralLinkDialog,
+	BalTokensDialog,
 },
 
 
@@ -98,9 +120,12 @@ props:[
 ],
 
 data(){return{
-	openDialog:false,
+	openDialog:false,	
 	
 	openReferralDialog:false,
+	
+	openBALTokensDialog:false,
+	baltokensLoading:false,	
 	
 	
 	'totalInqs': 0,
@@ -110,13 +135,11 @@ data(){return{
 
 	pckg: {},
 
-	baltkn: 0
 
 }},
 
 created(){
 	this.setMaxAndTotalInqs();	
-	this.getBalTkns();	
 
 	inqEvntBs.onFormSubmitted(()=>{
 		this.setMaxAndTotalInqs();
@@ -126,13 +149,6 @@ created(){
 
 methods:{
 
-
-	getBalTkns(){
-		this.gettokens().then((rspns)=>{
-			console.log(rspns);
-			this.baltkn = rspns;
-		})
-	},
 
 	setMaxAndTotalInqs(){
 		this.getMaxInqs().then((rspns)=>{
@@ -150,6 +166,7 @@ methods:{
 	setTotalInqs(){
 
 	},
+
 },
 
 computed:{

@@ -3,7 +3,7 @@
 		<v-layout row justify-center>
 
 		<v-dialog
-		width="900"
+		max-width="1100"
 		:value="dialog" 
 		@input="closeDialog()" >
 
@@ -64,10 +64,12 @@
 							:loading="tableLoading"
 							hide-actions 
 							class="elevation-0 refTranxs">
+
 								<template v-slot:items="sp">
 									<tr> 
+										<td>{{ sp.item.ref_id }}</td>
 										<td>{{ sp.item.name }}</td>
-										<td>{{ numberWithCommas(sp.item.bal_amt) }}</td>
+										<td>{{ numberWithCommas(sp.item.bal_amt) }} BAL</td>
 										<td>{{ numberWithCommas(sp.item.commission) }}</td>
 										<td v-html="sp.item.conversion"></td>
 										<td>{{ sp.item.is_verified }}</td>
@@ -132,6 +134,10 @@ export default {
 		refTrans: {
 			headers: [
 				{
+					text: 'ID',
+					value: 'ref_id',
+				},
+				{
 					text: 'Name',
 					value: 'name',
 				},
@@ -144,7 +150,7 @@ export default {
 					value: 'commission',
 				},
 				{
-					text: 'Expected BTC & ETH',
+					text: 'Expected BTC or ETH',
 					value: 'conversion',
 				},
 				{
@@ -190,11 +196,12 @@ export default {
 				if(rspns.length) {
 					forEach(rspns,(item)=>{
 						this.refTrans.data.push({
+							ref_id: item.user_reference_id,
 							name: item.name,
 							bal_amt: item.bal_amt,
 							is_verified: item.is_verified,
 							conversion: '<strong>BTC:</strong> '+item.BTC+'<br>'+'<strong>ETH:</strong> '+item.ETH,
-							commission: item.expected_bal_amt,
+							commission: item.expected_bal_amt+' BAL ('+item.expected_bal_amt_per+')',
 						});
 					});
 					console.log('refer this.refTrans',this.refTrans);
@@ -234,7 +241,7 @@ export default {
 		/deep/ table.v-table tbody td,
 		/deep/ table.v-table thead th.sortable {
 			padding-left: 15px;
-			padding-right: 15px;
+			padding-right: 15px;	
 		}
 
 	}

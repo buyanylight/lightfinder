@@ -43,6 +43,11 @@ const state = {
 
 	api: {
 
+		readAll: {
+			method  : 'put',
+			url     : base_url+'/v1/notifications/read',
+		},
+
 		getNotifications: {
 			method  : 'get',
 			url     : base_url+'/v1/notifications',
@@ -100,6 +105,9 @@ const mutations = {
 	SET_UNREAD_M(state,data) {
 		state.unread = data;
 	},
+	REMOVE_UNREAD_M(state,data) {
+		state.unread = state.unread - data;
+	},
 
 	//////////////////////////////////////////////////////////
 
@@ -124,6 +132,9 @@ const mutations = {
 	},
 	SET_UNREADMSGS_M(state,data) {
 		state.unreadMsgs = data;
+	},
+	REMOVE_UNREADMSGS_M(state,data) {
+		state.unreadMsgs = state.unreadMsgs - data;
 	},
 
 	//////////////////////////////////////////////////////////
@@ -779,13 +790,48 @@ const actions = {
 
 
 
+	readAll_a(context,data) {
+		return new Promise((resolve, reject) => {
+			var ntfctnType = data.ntfctnType;
+
+			if(ntfctnType=='normalType')
+			context.commit('SET_UNREAD_M',0);
+			else if(ntfctnType=='messageType')
+			context.commit('SET_UNREADMSGS_M',0);
+
+			var typeURL = "";
+			if(ntfctnType=='messageType')
+			typeURL = 'type=message';
+
+			var headers = {token:localStorage.access_token};
+			axios({
+				method: state.api.readAll.method,
+				url: state.api.readAll.url+'?'+typeURL,
+				headers: headers,
+			})
+			.then(response => {
+				resolve(response.data);			
+			})
+			.catch(error => {
+				reject(error);
+			})
+
+
+			// setTimeout(()=>{
+			// 	resolve({});
+			// },1500);
+
+		});
+	},
+
+
    markNotifasRead_a(context,data) {
-   		var ntfctn = data.ntfctn;
-   		var ntfctnType = data.ntfctnType;
+		var ntfctn = data.ntfctn;
+		var ntfctnType = data.ntfctnType;
 		return new Promise((resolve, reject) => {
 
 			var headers = {token:localStorage.access_token};
-		   	axios({
+			axios({
 				method: state.api.markNotifasRead.method,
 				url: state.api.markNotifasRead.url + `/${ntfctn.data.notification_id}/read`,
 				headers: headers,
@@ -797,11 +843,14 @@ const actions = {
 				if(!ntfctn.isRead) {
 					
 					if(ntfctnType=='normalType')
-					state.unread = parseInt(state.unread) - 1;
+					context.commit('REMOVE_UNREAD_M',1);
 					else if(ntfctnType=='messageType')
-					state.unreadMsgs = parseInt(state.unreadMsgs) - 1;
+					context.commit('REMOVE_UNREADMSGS_M',1);
 					
-					ntfctn.isRead = true;
+					// state.unread = parseInt(state.unread) - 1;
+					// state.unreadMsgs = parseInt(state.unreadMsgs) - 1;
+					
+					// ntfctn.isRead = true;
 				}
 				
 

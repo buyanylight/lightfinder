@@ -63,9 +63,9 @@ Vue.use(require('vue-cookies'));
 import GAuth from 'vue-google-oauth2'
 
 const gauthOption = {
-  clientId: '357366120684-4kni7uj7n2c86osuce6lf8t9t13m6fu8.apps.googleusercontent.com',
-  scope: 'profile email',
-  prompt: 'select_account'
+	clientId: '357366120684-4kni7uj7n2c86osuce6lf8t9t13m6fu8.apps.googleusercontent.com',
+	scope: 'profile email',
+	prompt: 'select_account'
 }
 Vue.use(GAuth, gauthOption);
 //////////////////////////////////////////////////////////////////////////
@@ -176,8 +176,8 @@ Vue.use(VueAuthenticate, {
 
 
 	    linkedin: {
-			clientId: '81r09zbihvmjcl',
-			redirectUri: 'https://almani.ddns.net:2021/BAL-Landing_Page/public/auth/linkedin/callback',
+		clientId: '81r09zbihvmjcl',
+		redirectUri: 'https://almani.ddns.net:2021/BAL-Landing_Page/public/auth/linkedin/callback',
 	    	// name: 'linkedin',
 	    	// url: '/auth/linkedin',
 	    	authorizationEndpoint: 'https://www.linkedin.com/oauth/v2/authorization',
@@ -279,46 +279,46 @@ Vue.use(Vuetify, {
 })
 
 Object.keys(Components).forEach(key => {
-  Vue.component(key, Components[key])
+	Vue.component(key, Components[key])
 })
 
 Object.keys(Widgets).forEach(key => {
-  Vue.component(key, Widgets[key])
+	Vue.component(key, Widgets[key])
 })
 
 const emitter = new Vue()
 Object.defineProperties(Vue.prototype, {
-  $eventBus: {
-	get: function () {
-	  return emitter
+	$eventBus: {
+		get: function () {
+			return emitter
+		}
 	}
-  }
 })
 
 Vue.filter('twoDigits', (value) => {
-  if (value.toString().length <= 1) {
-	return '0' + value.toString()
-  }
-  return value.toString()
+	if (value.toString().length <= 1) {
+		return '0' + value.toString()
+	}
+	return value.toString()
 })
 Vue.filter('capitalize', function (str) {
-  return str.charAt(0).toUpperCase() + str.slice(1)
+	return str.charAt(0).toUpperCase() + str.slice(1)
 })
 Vue.filter('lowercase', function (str) {
-  return str.charAt(0).toLowerCase() + str.slice(1)
+	return str.charAt(0).toLowerCase() + str.slice(1)
 })
 Vue.filter('firstChar', function (str) {
-  return str.charAt(0).toUpperCase()
+	return str.charAt(0).toUpperCase()
 })
 Vue.filter('first2Char', function (str) {
-  return str.substring(0, 2).toUpperCase()
+	return str.substring(0, 2).toUpperCase()
 })
 Vue.filter('hljshtml', function (value) {
-  return value.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+	return value.replace(/</g, '&lt;').replace(/>/g, '&gt;')
 })
 
 Vue.filter('truncate', function (value, args) {
-  return truncate(value, args)
+	return truncate(value, args)
 })
 
 const i18n = createI18n()
@@ -387,11 +387,11 @@ Vue.mixin(helpers);
 
 /* eslint-disable no-new */
 export default new Vue({ 
-  el: '#app',
-  router,
-  store,
-  i18n,
-  render: h => h(App)
+	el: '#app',
+	router,
+	store,
+	i18n,
+	render: h => h(App)
 })
 
 

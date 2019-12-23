@@ -73,9 +73,9 @@ export default [
 
     {
         name: 'SupplierInquiry',
-        path: '/lightfinder/inquiry',
+        path: '/lightfinder/inquiries',
         components: {
-            default:SupplierInquiry,
+            default:SupplierHome,
             sidebar: AppSidebar, 
             header: AppToolbar, 
             footer: AppFooter,

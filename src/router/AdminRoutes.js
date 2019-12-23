@@ -6,7 +6,7 @@ import AppProfile from '@/views/Pages/Profile'
 import AppToolbarMyHmMyTwr from '@/views/Components/App/ToolbarMyHmMyTwr'
 
 import AdminHome from '@/views/Pages/Admin/Home'
-import AdminInquiry from '@/views/Pages/Admin/Inquiry'
+// import AdminInquiry from '@/views/Pages/Admin/Inquiry'
 import AdminBuyer from '@/views/Pages/Admin/Buyer'
 import AdminSupplier from '@/views/Pages/Admin/Supplier'
 import AdminInquiryView from "@/views/Components/App/Admin/InquiryView"
@@ -137,9 +137,9 @@ export default [
 	},
 	{
 		name: 'AdminInquiry',
-		path: '/lightfinder/inquiry',
+		path: '/lightfinder/inquiries',
 		components: {
-			default: AdminInquiry, 
+			default: AdminHome, 
 			sidebar: AppSidebar, 
 			header: AppToolbar, 
 			footer: AppFooter,
@@ -158,7 +158,7 @@ export default [
 		name: 'AdminInquiryView',
 		path: '/lightfinder/inquiry/:inquiry_id',
 		components: {
-			default: AdminInquiry, 
+			default: AdminHome, 
 			sidebar: AppSidebar, 
 			header: AppToolbar, 
 			footer: AppFooter,
@@ -285,7 +285,8 @@ export default [
 		components: { 
 			default: AdminMyHomePayQuotation, 
 			sidebar: AppSidebar, 
-			header: AppToolbarMyHmMyTwr, 
+			// header: AppToolbarMyHmMyTwr, 
+			header: AppToolbar, 
 			footer: AppFooter,
 		},
 		meta: myHomeMeta,
@@ -297,7 +298,8 @@ export default [
 		components: { 
 			default: AdminMyHomeRevisionView, 
 			sidebar: AppSidebar, 
-			header: AppToolbarMyHmMyTwr, 
+			// header: AppToolbarMyHmMyTwr, 
+			header: AppToolbar, 
 			footer: AppFooter,
 		},
 		meta: myHomeMeta,
@@ -309,7 +311,8 @@ export default [
 		components: { 
 			default: AdminMyHomeRevisionEdit, 
 			sidebar: AppSidebar, 
-			header: AppToolbarMyHmMyTwr, 
+			// header: AppToolbarMyHmMyTwr, 
+			header: AppToolbar, 
 			footer: AppFooter,
 		},
 		meta: myHomeMeta,
@@ -321,7 +324,8 @@ export default [
 		components: { 
 			default: AdminMyHomeRevisionCopy, 
 			sidebar: AppSidebar, 
-			header: AppToolbarMyHmMyTwr, 
+			// header: AppToolbarMyHmMyTwr, 
+			header: AppToolbar, 
 			footer: AppFooter,
 		},
 		meta: myHomeMeta,
@@ -333,7 +337,8 @@ export default [
 		components: { 
 			default: AdminMyHomeOrderSamples, 
 			sidebar: AppSidebar, 
-			header: AppToolbarMyHmMyTwr, 
+			// header: AppToolbarMyHmMyTwr, 
+			header: AppToolbar, 
 			footer: AppFooter,
 		},
 		meta: myHomeMeta,
@@ -388,7 +393,8 @@ export default [
 		components: { 
 			default: AdminMyHomePayQuotation, 
 			sidebar: AppSidebar, 
-			header: AppToolbarMyHmMyTwr, 
+			// header: AppToolbarMyHmMyTwr, 
+			header: AppToolbar, 
 			footer: AppFooter,
 		},
 		meta: myTowerMeta,
@@ -400,7 +406,8 @@ export default [
 		components: { 
 			default: AdminMyHomeRevisionView, 
 			sidebar: AppSidebar, 
-			header: AppToolbarMyHmMyTwr, 
+			// header: AppToolbarMyHmMyTwr, 
+			header: AppToolbar, 
 			footer: AppFooter,
 		},
 		meta: myTowerMeta,
@@ -412,7 +419,8 @@ export default [
 		components: { 
 			default: AdminMyHomeRevisionEdit, 
 			sidebar: AppSidebar, 
-			header: AppToolbarMyHmMyTwr, 
+			// header: AppToolbarMyHmMyTwr, 
+			header: AppToolbar, 
 			footer: AppFooter,
 		},
 		meta: myTowerMeta,
@@ -424,7 +432,8 @@ export default [
 		components: { 
 			default: AdminMyHomeRevisionCopy, 
 			sidebar: AppSidebar, 
-			header: AppToolbarMyHmMyTwr, 
+			// header: AppToolbarMyHmMyTwr, 
+			header: AppToolbar, 
 			footer: AppFooter,
 		},
 		meta: myTowerMeta,
@@ -436,7 +445,8 @@ export default [
 		components: { 
 			default: AdminMyHomeOrderSamples, 
 			sidebar: AppSidebar, 
-			header: AppToolbarMyHmMyTwr, 
+			// header: AppToolbarMyHmMyTwr, 
+			header: AppToolbar, 
 			footer: AppFooter,
 		},
 		meta: myTowerMeta,

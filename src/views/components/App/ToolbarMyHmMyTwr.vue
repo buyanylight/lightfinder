@@ -521,6 +521,9 @@ methods: {
 		this.$store.dispatch('ntfctns/markNotifasRead_a',{
     		ntfctn,
     		ntfctnType,
+    	})
+    	.then((rspns)=>{
+			ntfctn.isRead = true;
     	});
 		// console.log(this.$refs);
 

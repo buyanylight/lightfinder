@@ -115,7 +115,7 @@
 							</v-flex>
 
 
-							<!-- <v-flex xs12>
+							<v-flex xs12>
 								<v-btn block 
 								color="darken-2" 
 								:color="(payMini=='yearly.mini')?'#007500':'black'"
@@ -127,7 +127,7 @@
 									</v-icon>
 									<h5 class="font-weight-regular">CRYPTO CURRENCY</h5>
 								</v-btn>
-							</v-flex> -->
+							</v-flex>
 
 							</v-layout>
 							</template>
