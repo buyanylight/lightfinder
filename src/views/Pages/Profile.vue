@@ -18,49 +18,7 @@
 							</v-layout>
 						</v-flex>
 
-						<v-flex mt-4 xs12 px-3>
-							<v-btn 
-							class="mb-4 mt-4"
-							style="height: 50px; min-width: auto; width: 60px;"
-							color="grey darken-4" 
-							dark
-							@click="showUploadProfileImage = !showUploadProfileImage" 
-							:loading="formloading">
-								<v-icon>fas fa-edit</v-icon>
-							</v-btn>
-
-							<template v-if="showUploadProfileImage">
-							<v-layout row wrap>
-								<!-- OEM DROPZONE  -->
-								<vue-dropzone 
-								id="dropzone_profileimage" 
-								ref="dropzone_profileimage" 
-								:options="dropzoneOptions" 
-								:useCustomSlot="useCustomSlot"
-								:awss3="getAWSS3('add-inquiry-oems')"
-								@vdropzone-removed-file="vdz_removedFile"
-								@vdropzone-success="vdz_success($event,'add-inquiry-oems')">
-									<div class="dropzone-custom-content">
-										<h3 class="dropzone-custom-title">Drag and drop to change your profile image</h3>
-										<div class="subtitle">..or click to select a file from your computer</div>
-									</div>
-								</vue-dropzone>
-								<!-- OEM DROPZONE  -->							
-							</v-layout>
-
-							<!-- v-if="showSaveProfileImage" -->
-							<!-- <v-btn 
-							class="mt-2 ml-0"
-							color="success"
-							dark  
-							title="Save Image!"
-							@click="saveProfileImage()"
-							:loading="formloading">
-								<v-icon class="mr-3">far fa-save</v-icon> Save New Profile Image
-							</v-btn> -->
-
-							</template>
-						</v-flex>
+						
 
 					</v-layout>
 				</v-flex>
@@ -158,6 +116,56 @@
 							label="Country" 
 							data-vv-name="Country" required>
 							</v-select>
+						</v-flex>
+
+
+						<v-flex xs10 offset-xs1 mt-2>
+							<v-layout justify-space-between align-center> 
+								<h3 style="text-decoration: underline;">Update Profile Picture</h3>
+								<v-btn 
+								style=""
+								color="grey darken-4" 
+								fab dark
+								@click="showUploadProfileImage = !showUploadProfileImage" 
+								alt="Update Profile Picture"
+								:loading="formloading">
+									<v-icon>fas fa-edit</v-icon>
+								</v-btn>
+							</v-layout>
+						</v-flex>
+
+						<v-flex xs10 offset-xs1 mb-4 mt-3>
+							<template v-if="showUploadProfileImage">
+							<!-- <v-layout row wrap class="mb-4">
+							</v-layout> -->
+								<!-- OEM DROPZONE  -->
+								<vue-dropzone 
+								id="dropzone_profileimage" 
+								ref="dropzone_profileimage" 
+								:options="dropzoneOptions" 
+								:useCustomSlot="useCustomSlot"
+								:awss3="getAWSS3('add-inquiry-oems')"
+								@vdropzone-removed-file="vdz_removedFile"
+								@vdropzone-success="vdz_success($event,'add-inquiry-oems')">
+									<div class="dropzone-custom-content">
+										<h3 class="dropzone-custom-title">Drag and drop to change your profile image</h3>
+										<div class="subtitle">..or click to select a file from your computer</div>
+									</div>
+								</vue-dropzone>
+								<!-- OEM DROPZONE  -->							
+
+							<!-- v-if="showSaveProfileImage" -->
+							<!-- <v-btn 
+							class="mt-2 ml-0"
+							color="success"
+							dark  
+							title="Save Image!"
+							@click="saveProfileImage()"
+							:loading="formloading">
+								<v-icon class="mr-3">far fa-save</v-icon> Save New Profile Image
+							</v-btn> -->
+
+							</template>
 						</v-flex>
 
 						<v-flex xs10 offset-xs1>
@@ -494,14 +502,14 @@ export default {
 
 
 		fillForm() {
-			this.form.email =       	this.authUser.email;
-			this.form.first_name =  	this.authUser.firstname;
-			this.form.last_name =   	this.authUser.lastname;
-			this.form.job_title =   	this.authUser.job_title;
-			this.form.phone =       	this.authUser.phone;
-			this.form.fax =         	this.authUser.fax;
-			this.form.address =     	this.authUser.address;
-			this.form.postal =     		this.authUser.postal;			
+			this.form.email =       	(this.authUser.email=='null')?'':this.authUser.email;
+			this.form.first_name =  	(this.authUser.firstname=='null')?'':this.authUser.firstname;
+			this.form.last_name =   	(this.authUser.lastname=='null')?'':this.authUser.lastname;
+			this.form.job_title =   	(this.authUser.job_title=='null')?'':this.authUser.job_title;
+			this.form.phone =       	(this.authUser.phone=='null')?'':this.authUser.phone;
+			this.form.fax =         	(this.authUser.fax=='null')?'':this.authUser.fax;
+			this.form.address =     	(this.authUser.address=='null')?'':this.authUser.address;
+			this.form.postal =     		(this.authUser.postal=='null')?'':this.authUser.postal;
 			this.form.country_id =  	parseInt(this.authUser.country_id);
 			// this.form.sel_country_id =  {id:this.authUser.country_id};
 			console.log("fillForm",this.form);
@@ -511,10 +519,10 @@ export default {
 			this.showUploadProfileImage = false;
 			this.showSaveProfileImage = false;
 			this.attachment = null;
-			
+
 			var avatarPlaceholder = config.main.websiteURL+'/static/gender-neutral.png';
 
-			this.avatarImg = (this.authUser.avatar)?this.authUser.avatar:tempAvatar;
+			this.avatarImg = (this.authUser.avatar)?this.authUser.avatar:avatarPlaceholder;
 		},
 
 		resetForm() {

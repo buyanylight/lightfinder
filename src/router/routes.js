@@ -74,10 +74,10 @@ var userRoutes = [];
 if(store.state.auth.auth_user.role==config.auth.role.admin.id) {
     userRoutes = AdminRoutes;
 }
-else if(store.state.auth.auth_user.role==config.auth.role.buyer.id) { 
+else if(store.state.auth.auth_user.role==config.auth.role.buyer.id) {
     userRoutes = BuyerRoutes;
 }
-else if(store.state.auth.auth_user.role==config.auth.role.supplier.id) { 
+else if(store.state.auth.auth_user.role==config.auth.role.supplier.id) {
     userRoutes = SupplierRoutes;
 }
 
