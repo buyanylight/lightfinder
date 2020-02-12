@@ -31,7 +31,8 @@
 							<h4 class="mb-4">Please choose the currency you would like to claim in:</h4>
 						</v-flex>
 						<v-flex xs12>
-							<v-layout row wrap justify-space-around>							  
+							<!-- <v-layout row wrap justify-space-around>							   -->
+							<v-layout row wrap justify-center>							  
 								<v-btn color="primary" @click="showText('btc')" :outline="btcText" :flat="btcText">BTC</v-btn>
 								<v-btn color="primary" @click="showText('eth')" :outline="ethText" :flat="ethText">ETH</v-btn>
 								<v-btn color="primary" @click="showText('bal')" :outline="balText" :flat="balText">BAL</v-btn>

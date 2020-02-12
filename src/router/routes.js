@@ -55,6 +55,13 @@ import SuperChat from '@/views/Pages/SuperChat'
 import Payment from '@/views/Pages/Payment/Payment'
 
 
+
+
+import ReferralLogout from '@/views/Pages/Referral/logout.vue'
+import ReferralLogin from '@/views/Pages/Referral/login.vue'
+import Referral from '@/views/Pages/Referral/referral.vue'
+
+
 // PAGES
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -85,6 +92,15 @@ else if(store.state.auth.auth_user.role==config.auth.role.supplier.id) {
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 // PAGES
 
+
+const meta = {
+	storeType: {
+		inq: "byrInq",
+		myHm: "byrMyHm",
+		auth: "auth",
+		pymnt: "pymnt",
+	},
+};
 
 
 const routes = 
@@ -141,6 +157,41 @@ const routes =
 	/*
 		public views
 	*/
+
+
+
+
+	// Referral
+	///////////////////////////////////////////////
+	{
+		name: 'ReferralLogin',
+		path: '/buyer/referral/login',
+		components: {
+			default: ReferralLogin,
+		},
+		meta: meta,
+	},
+	{
+		name: 'ReferralLogout',
+		path: '/buyer/referral/logout',
+		components: {
+			default: ReferralLogout,
+		},
+		meta: meta,
+	},
+	{
+		name: 'Referral',
+		path: '/buyer/referral',
+		components: {
+			default: Referral,
+		},
+		meta: meta,
+	},
+	///////////////////////////////////////////////
+	// Referral
+
+
+
 
 	{
 		name: 'BuyerRegistration2',

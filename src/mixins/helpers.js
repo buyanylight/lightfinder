@@ -106,7 +106,7 @@ export default {
 
 	    getStore(type='inq'){
 
-	    	// console.log('$route',this.$route.meta.storeType[type]);
+	    	console.log('$route',this.$route.meta.storeType[type]);
 
 	        // return this.$route.meta.storeType.inq;
 	        return this.$route.meta.storeType[type];

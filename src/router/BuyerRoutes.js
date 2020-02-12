@@ -38,7 +38,7 @@ import UnderConstruction from '@/views/Pages/UnderConstruction'
 import test from '@/views/Components/App/test' 
 
 
-const meta = { 
+const meta = {
 	requiresAuth: true,
 	role: config.auth.role.buyer.id,
 	items: [
